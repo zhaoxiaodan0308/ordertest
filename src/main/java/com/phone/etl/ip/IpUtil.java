@@ -1,7 +1,6 @@
-package com.phone.etl;
+package com.phone.etl.ip;
 
 import com.alibaba.fastjson.JSONObject;
-import com.phone.etl.ip.IPSeeker;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -9,11 +8,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
- * @ClassName IpUtil
- * @Author lyd
- * @Date $ $
- * @Vesion 1.0
- * @Description
 ip编程国家省市：
 1、纯真数据库解析
 2、淘宝在线api解析

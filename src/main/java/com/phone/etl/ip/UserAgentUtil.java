@@ -33,13 +33,13 @@ public class UserAgentUtil {
             UASparser uasParser = new UASparser(OnlineUpdater.getVendoredInputStream());
             cz.mallat.uasparser.UserAgentInfo info = uasParser.parse(userAgent);
 
-            result.setBrowserName(info.getUaName());
+            result.setBrowserName(info.getUaFamily());
             result.setBrowserVersion(info.getBrowserVersionInfo());
             result.setOsName(info.getOsFamily());
             result.setOsVersion(info.getOsName());
 
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("userAgent解析错误");
         }
 
         return result;

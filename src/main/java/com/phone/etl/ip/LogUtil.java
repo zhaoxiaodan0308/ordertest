@@ -36,7 +36,7 @@ public class LogUtil {
             //存储ip解析的地区
             handleIP(map);
             //时间戳
-            map.put(Constants.LOG_SERVER_TIME, strings[1].replace("\\.", ""));
+            map.put(Constants.LOG_SERVER_TIME, strings[1].replace(".",""));
             //输入参数解析
             String parms = strings[3];
             handleParms(parms, map);

@@ -12,8 +12,6 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.Map;
 
-import static com.phone.common.Constants.EventEnum.LANUCH;
-
 /**
  * @ClassName EtlToHdfs
  * @Author lyd
@@ -55,6 +53,7 @@ public class EtlToHdfs extends Mapper<LongWritable, Text, LogWritable, NullWrita
             case CHARGEREQUEST:
             case CHARGESUCCESS:
                 handleMap(map, context);
+                outputRecords++;
                 break;
             default:
                 break;
@@ -76,7 +75,7 @@ public class EtlToHdfs extends Mapper<LongWritable, Text, LogWritable, NullWrita
 
                 switch (en.getKey()) {
                     case "ver":
-                        k.setIp(en.getValue());
+                        k.setVer(en.getValue());
                         break;
                     case "s_time":
                         this.k.setS_time(en.getValue());

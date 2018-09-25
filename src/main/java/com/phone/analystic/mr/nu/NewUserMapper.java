@@ -71,6 +71,14 @@ public class NewUserMapper extends Mapper<LongWritable, Text, StatsUserDimension
 
             context.write(k,v);
 
+            //创建浏览器模式
+            String browserName=fields[24];
+            String browserVersion=fields[25];
+            BrowserDimension browserDimension=new BrowserDimension(browserName,browserVersion);
+            this.k.getStatsCommonDimension().setKpiDimension(browserNewUserKpi);
+            this.k.setBrowserDimension(browserDimension);
+
+            context.write(k,v);
         }
     }
 }

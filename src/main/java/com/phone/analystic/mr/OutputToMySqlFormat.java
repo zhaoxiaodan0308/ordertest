@@ -7,7 +7,6 @@ import com.phone.analystic.mr.service.IDimension;
 import com.phone.analystic.mr.service.impl.IDimensionImpl;
 import com.phone.common.KpiType;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.mapred.lib.db.DBOutputFormat;
 import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputCommitter;
 import org.apache.log4j.Logger;

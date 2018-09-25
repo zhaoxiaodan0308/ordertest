@@ -51,7 +51,7 @@ public class IDimensionImpl implements IDimension {
             //走到此处，缓存中不存在该key，需要从数据库中获取
             //构建访问数据库需要的sql
             String[] sqls = null;
-            if (dimension instanceof BrowserDimension) {
+            if (dimension instanceof KpiDimension) {
                 sqls = buildKpiSqls(dimension);
             } else if (dimension instanceof PlatformDimension) {
                 sqls = buildPlatformSqls(dimension);
@@ -173,7 +173,7 @@ public class IDimensionImpl implements IDimension {
 
             //表中没有该数据
             ps = conn.prepareStatement(sqls[0], Statement.RETURN_GENERATED_KEYS);
-            this.setArgs(dimension, ps); //为查询语句赋值
+            this.setArgs(dimension, ps); //为插入语句赋值
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();
             if(rs.next()){

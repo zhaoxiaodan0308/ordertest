@@ -6,4 +6,75 @@
         <name>writer_new_user</name>
         <value>com.phone.analystic.mr.nu.NewUserOutputWriter</value>
     </property>
+
+    <property>
+        <name>writer_browser_new_user</name>
+        <value>com.phone.analystic.mr.nu.BrowserNewUserOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_active_users</name>
+        <value>com.phone.analystic.mr.activeUser.ActiveUserOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_browser_active_users</name>
+        <value>com.phone.analystic.mr.activeUser.BrowserActiveUserOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_active_members</name>
+        <value>com.phone.analystic.mr.activeMembers.ActiveMembersOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_browser_active_members</name>
+        <value>com.phone.analystic.mr.activeMembers.BrowserActiveMembersOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_new_members</name>
+        <value>com.phone.analystic.mr.nm.NewMembersOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_browser_new_members</name>
+        <value>com.phone.analystic.mr.nm.NewMembersOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_member_info</name>
+        <value>com.phone.analystic.mr.nm.NewMembersOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_session</name>
+        <value>com.phone.analystic.mr.session.SessionOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_browser_session</name>
+        <value>com.phone.analystic.mr.session.SessionOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_hourly_active_user</name>
+        <value>com.phone.analystic.mr.activeUser.ActiveUserOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_hourly_session</name>
+        <value>com.phone.analystic.mr.activeUser.ActiveUserOutputWriter</value>
+    </property>
+
+    <property>
+        <name>writer_location</name>
+        <value>com.phone.analystic.mr.locaion.LocationWriter</value>
+    </property>
+
+    <property>
+        <name>writer_pv</name>
+        <value>com.phone.analystic.mr.pv.PvOutputWriter</value>
+    </property>
+
 </configuration>

@@ -20,4 +20,7 @@ public class GlobalConstants {
 
     public static final String DEFAULT_VALUE = "unknown";
 
+    public static final long DAY_OF_MILLSECOND = 86400000l;
+
+
 }

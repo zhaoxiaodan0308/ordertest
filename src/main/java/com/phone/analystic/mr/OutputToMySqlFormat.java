@@ -104,8 +104,6 @@ public class OutputToMySqlFormat extends OutputFormat<StatsBaseDimension, StatsO
 
                 //为ps赋值准备
                 String calssName = conf.get("writer_" + kpi.kpiName);
-                System.out.println("tosql calssName:" + calssName);
-
 
                 //com.phone.analystic.mr.nu.NewUserOutputWriter
                 Class<?> classz = Class.forName(calssName); //将报名+类名转换成类
@@ -113,10 +111,12 @@ public class OutputToMySqlFormat extends OutputFormat<StatsBaseDimension, StatsO
                 //调用IOutputWritter中的output方法
                 writer.ouput(conf, key, value, ps, iDimension);
 
+
+                //有问题
                 //对赋值好的ps进行执行
                 if (batch.size() % 50 == 0) {  //有50个ps执行
                     ps.executeBatch();  //批量执行
-                    this.conn.commit(); //提交批处理执行
+//                    this.conn.commit(); //提交批处理执行
                     batch.remove(kpi); //将执行完的ps移除掉
                 }
 

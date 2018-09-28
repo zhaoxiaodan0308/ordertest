@@ -5,6 +5,7 @@ import com.phone.analystic.modle.base.*;
 import com.phone.analystic.mr.service.IDimension;
 
 import java.io.IOException;
+import java.security.acl.LastOwnerException;
 import java.sql.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -59,7 +60,12 @@ public class IDimensionImpl implements IDimension {
                 sqls = buildDateSqls(dimension);
             } else if (dimension instanceof BrowserDimension) {
                 sqls = buildBrowserSqls(dimension);
+            }else if (dimension instanceof LocationDimension) {
+                sqls = buildLocationSqls(dimension);
+            }else if (dimension instanceof EventDimension) {
+                sqls = buildEventSqls(dimension);
             }
+
 
             //获取jdbc的连接
             conn = JdbcUtil.getConn();
@@ -74,7 +80,7 @@ public class IDimensionImpl implements IDimension {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            JdbcUtil.close(conn,null,null);
+            JdbcUtil.close(conn, null, null);
         }
 
         throw new RuntimeException("插入基础维度类异常.");
@@ -111,6 +117,18 @@ public class IDimensionImpl implements IDimension {
         return new String[]{insertSql, selectSql};
     }
 
+    private String[] buildLocationSqls(BaseDimension dimension) {
+        String insertSql = "INSERT INTO `dimension_location` (`category`, `action`) VALUES(?,?)";
+        String selectSql = "SELECT `id` FROM `dimension_location` WHERE `category` = ? AND `action` = ? ";
+        return new String[]{insertSql, selectSql};
+    }
+
+    private String[] buildEventSqls(BaseDimension dimension) {
+        String insertSql = "INSERT INTO `dimension_event` (`country`, `province`,`city`) VALUES(?,?,?)";
+        String selectSql = "SELECT `id` FROM `dimension_location` WHERE `country` = ? AND `province` = ? AND `city` = ?";
+        return new String[]{insertSql, selectSql};
+    }
+
     /**
      * 构建维度的key
      *
@@ -144,6 +162,17 @@ public class IDimensionImpl implements IDimension {
             PlatformDimension platform = (PlatformDimension) dimension;
             sb.append(platform.getPlatformName());
             //new_user
+        } else if (dimension instanceof LocationDimension) {
+            sb.append("location_");
+            LocationDimension location = (LocationDimension) dimension;
+            sb.append(location.getCountry());
+            sb.append(location.getProvince());
+            sb.append(location.getCity());
+        } else if (dimension instanceof EventDimension) {
+            sb.append("event_");
+            EventDimension event = (EventDimension) dimension;
+            sb.append(event.getCategory());
+            sb.append(event.getAction());
         }
         return sb.toString();
     }
@@ -176,13 +205,13 @@ public class IDimensionImpl implements IDimension {
             this.setArgs(dimension, ps); //为插入语句赋值
             ps.executeUpdate();
             rs = ps.getGeneratedKeys();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            JdbcUtil.close(null,ps,rs);
+        } finally {
+            JdbcUtil.close(null, ps, rs);
         }
 
         return 0;
@@ -210,6 +239,15 @@ public class IDimensionImpl implements IDimension {
                 BrowserDimension browser = (BrowserDimension) dimension;
                 ps.setString(++i, browser.getBrowserName());
                 ps.setString(++i, browser.getBrowserVersion());
+            } else if (dimension instanceof LocationDimension) {
+                LocationDimension location = (LocationDimension) dimension;
+                ps.setString(++i, location.getCountry());
+                ps.setString(++i, location.getProvince());
+                ps.setString(++i, location.getCity());
+            }else if (dimension instanceof EventDimension) {
+                EventDimension event = (EventDimension) dimension;
+                ps.setString(++i, event.getCategory());
+                ps.setString(++i, event.getAction());
             }
         } catch (SQLException e) {
             e.printStackTrace();

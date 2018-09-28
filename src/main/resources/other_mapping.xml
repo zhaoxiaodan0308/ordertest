@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+    <property>
+        <name>new_install_users</name>
+        <value>select `platform_dimension_id`,
+            `new_install_users`
+            from `stats_user`
+            where `date_dimension_id` =?
+        </value>
+    </property>
+
+    <property>
+        <name>total_install_users</name>
+        <value>select `platform_dimension_id`,
+            `total_install_users`
+            from `stats_user`
+            where `date_dimension_id` =?
+        </value>
+    </property>
+
+    <property>
+        <name>total_new_update_user</name>
+        <value>
+            insert into `stats_user`(
+            `date_dimension_id`,
+            `platform_dimension_id`,
+            `total_install_users`,
+            `created`)
+            values(?,?,?,?) ON DUPLICATE KEY UPDATE `total_install_users` = ?
+        </value>
+    </property>
+
+    <property>
+        <name>browser_new_install_users</name>
+        <value>select `platform_dimension_id`,
+            `browser_dimension_id`,
+            `new_install_users`
+            from `stats_device_browser`
+            where `date_dimension_id` =?
+        </value>
+    </property>
+
+    <property>
+        <name>browser_total_install_users</name>
+        <value>select `platform_dimension_id`,
+            `browser_dimension_id`,
+            `total_install_users`
+            from `stats_device_browser`
+            where `date_dimension_id` =?
+        </value>
+    </property>
+
+    <property>
+        <name>browser_total_new_update_user</name>
+        <value>
+            insert into `stats_device_browser`(
+            `date_dimension_id`,
+            `platform_dimension_id`,
+            `browser_dimension_id`,
+            `total_install_users`,
+            `created`)
+            values(?,?,?,?,?) ON DUPLICATE KEY UPDATE `total_install_users` = ?
+        </value>
+    </property>
+
+    <property>
+        <name>other_member_info</name>
+        <value>
+            select `member_id`
+            from `member_info`
+            where `member_id` =?
+        </value>
+    </property>
+
+    <property>
+        <name>other_delete_member_info</name>
+        <value>delete from `member_info` where `created` = ?</value>
+    </property>
+
+    <property>
+        <name>member_info</name>
+        <value>insert into `member_info` (
+            `member_id` ,
+            `last_visit_date`,
+            `member_id_server_date`,
+            `created`)
+            values(?,?,?,?) on duplicate key update `last_visit_date` = ?
+        </value>
+    </property>
+
+    <!--new member-->
+    <property>
+        <name>new_members_select</name>
+        <value>select `platform_dimension_id`,
+            `new_members`
+            from `stats_user`
+            where `date_dimension_id` =?
+        </value>
+    </property>
+
+    <property>
+        <name>total_members_select</name>
+        <value>select `platform_dimension_id`,
+            `total_members`
+            from `stats_user`
+            where `date_dimension_id` =?
+        </value>
+    </property>
+
+    <property>
+        <name>total_members_update</name>
+        <value>
+            insert into `stats_user`(
+            `date_dimension_id`,
+            `platform_dimension_id`,
+            `total_members`,
+            `created`)
+            values(?,?,?,?) ON DUPLICATE KEY UPDATE `total_members` = ?
+        </value>
+    </property>
+
+    <!--new browser member-->
+    <property>
+        <name>browser_new_members_select</name>
+        <value>select `platform_dimension_id`,
+            `browser_dimension_id`,
+            `new_members`
+            from `stats_device_browser`
+            where `date_dimension_id` =?
+        </value>
+    </property>
+
+    <property>
+        <name>browser_total_members_select</name>
+        <value>select `platform_dimension_id`,
+            `browser_dimension_id`,
+            `total_members`
+            from `stats_device_browser`
+            where `date_dimension_id` =?
+        </value>
+    </property>
+
+    <property>
+        <name>browser_total_members_update</name>
+        <value>
+            insert into `stats_device_browser`(
+            `date_dimension_id`,
+            `platform_dimension_id`,
+            `browser_dimension_id`,
+            `total_members`,
+            `created`)
+            values(?,?,?,?,?) ON DUPLICATE KEY UPDATE `total_members` = ?
+        </value>
+    </property>
+
+</configuration>

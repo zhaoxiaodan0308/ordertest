@@ -12,7 +12,21 @@ package com.phone.common;
 public enum  KpiType {
 
     NEW_USER("new_user"),
-    BROWSER_NEW_USER("browser_new_user");
+    BROWSER_NEW_USER("browser_new_user"),
+    ACTIVE_USERS("active_users"),
+    BROWSER_ACTIVE_USERS("browser_active_users"),
+    ACTIVE_MEMBERS("active_members"),
+    BROWSER_ACTIVE_MEMBERS("browser_active_members"),
+    NEW_MEMBERS("new_members"),
+    BROWSER_NEW_MEMBERS("browser_new_members"),
+    MEMBER_INFO("member_info"),
+    SESSION("session"),
+    BROWSER_SESSION("browser_session"),
+    HOURLY_ACTIVE_USER("hourly_active_user"),
+    HOURLY_SESSION("hourly_session"),
+    LOCATION("location"),
+    PV("pv"),
+    ;
 
     public String kpiName;
 

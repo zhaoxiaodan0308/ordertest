@@ -124,7 +124,7 @@ public class ActiveUserRunner implements Tool {
         try {
             ToolRunner.run(new Configuration(), new ActiveUserRunner(), args);
         } catch (Exception e) {
-            logger.error("运行异常");
+            logger.error("运行异常",e);
         }
     }
 }

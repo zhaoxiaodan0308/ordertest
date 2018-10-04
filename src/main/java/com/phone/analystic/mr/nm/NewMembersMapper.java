@@ -9,7 +9,6 @@ import com.phone.analystic.modle.base.DateDimension;
 import com.phone.analystic.modle.base.KpiDimension;
 import com.phone.analystic.modle.base.PlatformDimension;
 import com.phone.analystic.modle.value.map.TimeOutputValue;
-import com.phone.common.Constants;
 import com.phone.common.DateEnum;
 import com.phone.common.KpiType;
 import org.apache.commons.lang.StringUtils;
@@ -22,7 +21,7 @@ import java.io.IOException;
 import java.sql.Connection;
 
 /**
- * 用户模块下的新增用户
+ * 用户模块下的新增会员
  */
 public class NewMembersMapper extends Mapper<LongWritable, Text, StatsUserDimension, TimeOutputValue> {
     private static final Logger logger = Logger.getLogger(NewMembersMapper.class);

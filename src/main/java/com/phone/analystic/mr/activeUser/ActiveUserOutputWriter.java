@@ -2,6 +2,7 @@ package com.phone.analystic.mr.activeUser;
 
 import com.phone.analystic.modle.StatsBaseDimension;
 import com.phone.analystic.modle.StatsUserDimension;
+import com.phone.analystic.modle.base.KpiDimension;
 import com.phone.analystic.modle.value.StatsOutpuValue;
 import com.phone.analystic.modle.value.reduce.OutputWritable;
 import com.phone.analystic.mr.IOutputWritter;
@@ -52,7 +53,7 @@ public class ActiveUserOutputWriter implements IOutputWritter {
                     //hourly表
                     ps.setInt(++i, iDimension.getDiemnsionIdByObject(k.getStatsCommonDimension().getDateDimension()));
                     ps.setInt(++i, iDimension.getDiemnsionIdByObject(k.getStatsCommonDimension().getPlatformDimension()));
-                    ps.setInt(++i, iDimension.getDiemnsionIdByObject(k.getStatsCommonDimension().getKpiDimension()));
+                    ps.setInt(++i, iDimension.getDiemnsionIdByObject(new KpiDimension(v.getKpi().kpiName)));
 
                     for (int j = 0; j < 24; j++) {
                         ps.setInt(++i, ((IntWritable) (v.getValue().get(new IntWritable(j)))).get());

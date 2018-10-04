@@ -1,15 +1,10 @@
-package com.phone.hive;
+package com.phone.analystic.hive;
 
 import com.phone.analystic.modle.base.PlatformDimension;
 import com.phone.analystic.mr.service.IDimension;
 import com.phone.analystic.mr.service.impl.IDimensionImpl;
-import com.phone.common.GlobalConstants;
-import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hive.ql.exec.UDF;
 import org.apache.log4j.Logger;
-
-import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * FileName: PlatformDimensionUdf

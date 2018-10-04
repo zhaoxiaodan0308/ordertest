@@ -1,4 +1,4 @@
-package com.phone.hive;
+package com.phone.analystic.hive;
 
 import com.phone.Util.TimeUtil;
 import com.phone.analystic.modle.base.DateDimension;

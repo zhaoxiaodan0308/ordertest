@@ -5,7 +5,6 @@ import com.phone.analystic.modle.base.*;
 import com.phone.analystic.mr.service.IDimension;
 
 import java.io.IOException;
-import java.security.acl.LastOwnerException;
 import java.sql.*;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -60,10 +59,14 @@ public class IDimensionImpl implements IDimension {
                 sqls = buildDateSqls(dimension);
             } else if (dimension instanceof BrowserDimension) {
                 sqls = buildBrowserSqls(dimension);
-            }else if (dimension instanceof LocationDimension) {
+            } else if (dimension instanceof LocationDimension) {
                 sqls = buildLocationSqls(dimension);
-            }else if (dimension instanceof EventDimension) {
+            } else if (dimension instanceof EventDimension) {
                 sqls = buildEventSqls(dimension);
+            } else if (dimension instanceof CurrencyTypeDimension) {
+                sqls = buildCurrencyTypeSqls(dimension);
+            } else if (dimension instanceof PaymentTypeDimension) {
+                sqls = buildPaymentTypeSqls(dimension);
             }
 
 
@@ -117,15 +120,27 @@ public class IDimensionImpl implements IDimension {
         return new String[]{insertSql, selectSql};
     }
 
-    private String[] buildLocationSqls(BaseDimension dimension) {
-        String insertSql = "INSERT INTO `dimension_location` (`category`, `action`) VALUES(?,?)";
-        String selectSql = "SELECT `id` FROM `dimension_location` WHERE `category` = ? AND `action` = ? ";
+    private String[] buildEventSqls(BaseDimension dimension) {
+        String insertSql = "INSERT INTO `dimension_event` (`category`, `action`) VALUES(?,?)";
+        String selectSql = "SELECT `id` FROM `dimension_event` WHERE `category` = ? AND `action` = ? ";
         return new String[]{insertSql, selectSql};
     }
 
-    private String[] buildEventSqls(BaseDimension dimension) {
-        String insertSql = "INSERT INTO `dimension_event` (`country`, `province`,`city`) VALUES(?,?,?)";
+    private String[] buildLocationSqls(BaseDimension dimension) {
+        String insertSql = "INSERT INTO `dimension_location` (`country`, `province`,`city`) VALUES(?,?,?)";
         String selectSql = "SELECT `id` FROM `dimension_location` WHERE `country` = ? AND `province` = ? AND `city` = ?";
+        return new String[]{insertSql, selectSql};
+    }
+
+    private String[] buildCurrencyTypeSqls(BaseDimension dimension) {
+        String insertSql = "INSERT INTO `dimension_currency_type` (`currency_name`) VALUES(?)";
+        String selectSql = "SELECT `id` FROM `dimension_currency_type` WHERE `currency_name` = ? ";
+        return new String[]{insertSql, selectSql};
+    }
+
+    private String[] buildPaymentTypeSqls(BaseDimension dimension) {
+        String insertSql = "INSERT INTO `dimension_payment_type` (`payment_type`) VALUES(?)";
+        String selectSql = "SELECT `id` FROM `dimension_payment_type` WHERE `payment_type` = ? ";
         return new String[]{insertSql, selectSql};
     }
 
@@ -173,7 +188,17 @@ public class IDimensionImpl implements IDimension {
             EventDimension event = (EventDimension) dimension;
             sb.append(event.getCategory());
             sb.append(event.getAction());
+        } else if (dimension instanceof CurrencyTypeDimension) {
+            sb.append("currencyType_");
+            CurrencyTypeDimension currencyType = (CurrencyTypeDimension) dimension;
+            sb.append(currencyType.getCurrency_name());
+        } else if (dimension instanceof PaymentTypeDimension) {
+            sb.append("paymentType_");
+            PaymentTypeDimension paymentType = (PaymentTypeDimension) dimension;
+            sb.append(paymentType.getPayment_type());
         }
+
+
         return sb.toString();
     }
 
@@ -195,7 +220,6 @@ public class IDimensionImpl implements IDimension {
             ps = conn.prepareStatement(sqls[1]);
             this.setArgs(dimension, ps); //为查询语句赋值
             rs = ps.executeQuery();
-
             if (rs.next()) {
                 return rs.getInt(1);
             }
@@ -244,11 +268,18 @@ public class IDimensionImpl implements IDimension {
                 ps.setString(++i, location.getCountry());
                 ps.setString(++i, location.getProvince());
                 ps.setString(++i, location.getCity());
-            }else if (dimension instanceof EventDimension) {
+            } else if (dimension instanceof EventDimension) {
                 EventDimension event = (EventDimension) dimension;
                 ps.setString(++i, event.getCategory());
                 ps.setString(++i, event.getAction());
+            } else if (dimension instanceof CurrencyTypeDimension) {
+                CurrencyTypeDimension currencyType = (CurrencyTypeDimension) dimension;
+                ps.setString(++i, currencyType.getCurrency_name());
+            }else if (dimension instanceof PaymentTypeDimension) {
+                PaymentTypeDimension paymentType = (PaymentTypeDimension) dimension;
+                ps.setString(++i, paymentType.getPayment_type());
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

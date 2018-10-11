@@ -1,0 +1,25 @@
+<workflow-app xmlns="uri:oozie:workflow:0.3" name="phone-coor">
+    <start to="sub-workflow-phone-mr"/>
+    <action name="sub-workflow-phone-mr">
+        <sub-workflow>
+            <app-path>${nameNode}${filePath}/mr</app-path>
+            <propagete-configuration/>
+        </sub-workflow>
+        <ok to="sub-workflow-phone-hive"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="sub-workflow-phone-hive">
+        <sub-workflow>
+            <app-path>${nameNode}${filePath}/hive</app-path>
+            <propagete-configuration/>
+        </sub-workflow>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+
+    <kill name="fail">
+        <message>Java failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

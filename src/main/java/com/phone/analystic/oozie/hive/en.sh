@@ -50,9 +50,8 @@ group by from_unixtime(cast(p.s_time/1000 as bigint),'yyyy-MM-dd'),p.pl,p.ca,p.a
 ) as tmp
 insert overwrite table stats_event
 select phone_platform(pl),phone_date(dt),phone_event(ca,ac),ct,dt
-;
 "
-
+;
 
 
 #run sqoop statment

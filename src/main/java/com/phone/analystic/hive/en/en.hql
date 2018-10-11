@@ -86,7 +86,7 @@ stored as orc
 
 set hive.exec.local.mode=true;
 from phone_tmp
-insert into phone partition(month=09,day=19)
+insert into phone partition(month=09,day=24)
 select
 ver,
 s_time,
@@ -120,7 +120,7 @@ country,
 province,
 city
 where month = 9
-and day = 19
+and day = 24
 ;
 
 在hive中创建和mysql最终结果便一样的临时表：

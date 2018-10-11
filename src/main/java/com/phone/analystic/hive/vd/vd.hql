@@ -72,7 +72,7 @@ select dt,pl as pl,0 as pv1,0 as pv2,0 as pv3,0 as pv4,0 as pv5_10,0 as pv10_30,
 )
 from tmp
 insert overwrite table stats_view_depth
-select phone_date(dt),phone_platform(pl),2,sum(pv1),sum(pv2),sum(pv3),sum(pv4),sum(pv5_10),sum(pv10_30),sum(pv30_60),sum(pv60pluss),dt
+select phone_platform(pl),phone_date(dt),3,sum(pv1),sum(pv2),sum(pv3),sum(pv4),sum(pv5_10),sum(pv10_30),sum(pv30_60),sum(pv60pluss),dt
 group by dt,pl
 ;
 
@@ -81,5 +81,5 @@ sqoop export --connect jdbc:mysql://hadoop01:3306/result \
  --username root --password root \
  --table stats_view_depth --export-dir /hive/log_phone.db/stats_view_depth/* \
  --input-fields-terminated-by "\\01" --update-mode allowinsert \
- --update-key date_dimension_id,platform_dimension_id,kpi_dimension_id \
+ --update-key platform_dimension_id,date_dimension_id,kpi_dimension_id \
  ;

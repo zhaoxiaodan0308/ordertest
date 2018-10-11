@@ -10,11 +10,8 @@ import com.phone.common.GlobalConstants;
 import com.phone.common.KpiType;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
-import org.apache.hadoop.io.Text;
 import org.apache.log4j.Logger;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 
 /**
@@ -40,9 +37,9 @@ public class SessionOutputWriter implements IOutputWritter {
 
             //新增会员赋值
             int sessionID = ((IntWritable) (v.getValue().get(new IntWritable(-1)))).get();
-            int sessionlength =((IntWritable) (v.getValue().get(new IntWritable(-2)))).get();
+            int sessionlength = ((IntWritable) (v.getValue().get(new IntWritable(-2)))).get();
 
-                    ps.setInt(++i, iDimension.getDiemnsionIdByObject(k.getStatsCommonDimension().getDateDimension()));
+            ps.setInt(++i, iDimension.getDiemnsionIdByObject(k.getStatsCommonDimension().getDateDimension()));
             ps.setInt(++i, iDimension.getDiemnsionIdByObject(k.getStatsCommonDimension().getPlatformDimension()));
             if (value.getKpi().equals(KpiType.BROWSER_SESSION)) {
                 ps.setInt(++i, iDimension.getDiemnsionIdByObject(k.getBrowserDimension()));
@@ -55,10 +52,8 @@ public class SessionOutputWriter implements IOutputWritter {
 
             ps.addBatch(); //添加到批处理中
 
-
         } catch (Exception e) {
             logger.error("新增会员指标ps赋值错误", e);
         }
-
     }
 }

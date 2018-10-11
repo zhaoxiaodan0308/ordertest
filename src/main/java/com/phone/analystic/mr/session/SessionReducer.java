@@ -29,7 +29,6 @@ public class SessionReducer extends Reducer<StatsUserDimension, TimeOutputValue,
         StatsUserDimension, OutputWritable> {
     private static final Logger logger = Logger.getLogger(SessionReducer.class);
     private OutputWritable v = new OutputWritable();
-    private Set unique = new HashSet();  //用于去重memberID
     private MapWritable map = new MapWritable();  //用于输出
     private Map<String, List<Long>> li = new HashMap<String, List<Long>>();  //存放sessionID信息
 
@@ -50,7 +49,6 @@ public class SessionReducer extends Reducer<StatsUserDimension, TimeOutputValue,
     protected void reduce(StatsUserDimension key, Iterable<TimeOutputValue> values, Context context) throws IOException, InterruptedException {
         //清空map
         map.clear();
-        unique.clear();
 
         for (TimeOutputValue va : values) {
             //将所有的sessionID信息保存
@@ -86,7 +84,6 @@ public class SessionReducer extends Reducer<StatsUserDimension, TimeOutputValue,
         int sessionLength = 0;
         for (Map.Entry<String, List<Long>> en : li.entrySet()) {
             if (en.getValue().size() >=2 ) {
-                unique.add(en.getKey());
                 sessionLength += Collections.max(en.getValue()) - Collections.min(en.getValue());
             }
         }
@@ -103,7 +100,7 @@ public class SessionReducer extends Reducer<StatsUserDimension, TimeOutputValue,
 
         //构造输出的v
         v.setKpi(KpiType.valueOfKpiName(key.getStatsCommonDimension().getKpiDimension().getKpiName()));
-        map.put(new IntWritable(-1), new IntWritable(this.unique.size()));
+        map.put(new IntWritable(-1), new IntWritable(this.li.size()));
         map.put(new IntWritable(-2), new IntWritable(sessionLength));
         v.setValue(map);
 

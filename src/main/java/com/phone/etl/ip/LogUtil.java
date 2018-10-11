@@ -80,7 +80,6 @@ public class LogUtil {
                         if (StringUtils.isNotEmpty(k)) {
                             map.put(k, v);
                         }
-
                     }
                 }
             }

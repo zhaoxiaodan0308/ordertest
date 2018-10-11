@@ -37,7 +37,6 @@ public class EtlToHdfs extends Mapper<LongWritable, Text, LogWritable, NullWrita
             filterRecords++;
             return;
         }
-
         Map<String, String> map = LogUtil.parserLog(values);
 
         //所有的事件输出到同一个文件中

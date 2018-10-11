@@ -1,0 +1,51 @@
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="phone-hive-wf">
+    <start to="etl-tohdfs"/>
+    <action name="etl-tohdfs">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>com.phone.etl.mr.EtlToHdfsRunner</main-class>
+            <arg>-d</arg>
+            <arg>${running_date}</arg>
+        </java>
+        <ok to="hive-en"/>
+        <error to="fail"/>
+    </action>
+    <action name="hive-en">
+        <shell xmlns="uri:oozie:shell-action:0.2"></shell>
+        <job-tracker>${jobTracker}</job-tracker>
+        <name-node>${nameNode}</name-node>
+        <exec>en.sh</exec>
+        <argument>-d</argument>
+        <argument>${running_date}</argument>
+        <file>en.sh</file>
+        <ok to="hive-vd"/>
+        <error to="fail"/>
+    </action>
+    <action name="hive-vd">
+        <shell xmlns="uri:oozie:shell-action:0.2"></shell>
+        <job-tracker>${jobTracker}</job-tracker>
+        <name-node>${nameNode}</name-node>
+        <exec>vd.sh</exec>
+        <argument>-d</argument>
+        <argument>${running_date}</argument>
+        <file>vd.sh</file>
+        <ok to="hive-od"/>
+        <error to="fail"/>
+    </action>
+    <action name="hive-od">
+        <shell xmlns="uri:oozie:shell-action:0.2"></shell>
+        <job-tracker>${jobTracker}</job-tracker>
+        <name-node>${nameNode}</name-node>
+        <exec>od.sh</exec>
+        <argument>-d</argument>
+        <argument>${running_date}</argument>
+        <file>vd.sh</file>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+    <kill name="fail">
+        <message>Shell action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

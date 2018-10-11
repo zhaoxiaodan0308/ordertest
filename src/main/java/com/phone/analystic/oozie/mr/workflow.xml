@@ -1,0 +1,106 @@
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="phone-mr-wf">
+    <start to="etl-tohdfs"/>
+    <action name="etl-tohdfs">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>com.phone.etl.mr.EtlToHdfsRunner</main-class>
+            <arg>-d</arg>
+            <arg>${running_date}</arg>
+        </java>
+        <ok to="mr-nu"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="mr-nu">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>com.phone.analystic.mr.nu.NewUserRunner</main-class>
+            <arg>-d</arg>
+            <arg>${running_date}</arg>
+        </java>
+        <ok to="mr-au"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="mr-au">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>com.phone.analystic.mr.activeUser.ActiveUserRunner</main-class>
+            <arg>-d</arg>
+            <arg>${running_date}</arg>
+        </java>
+        <ok to="mr-am"/>
+        <error to="fail"/>
+    </action>
+
+
+    <action name="mr-am">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>com.phone.analystic.mr.activeMembers.ActiveMembersRunner</main-class>
+            <arg>-d</arg>
+            <arg>${running_date}</arg>
+        </java>
+        <ok to="mr-pv"/>
+        <error to="fail"/>
+    </action>
+
+
+    <action name="mr-pv">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>com.phone.analystic.mr.pv.PvRunner</main-class>
+            <arg>-d</arg>
+            <arg>${running_date}</arg>
+        </java>
+        <ok to="mr-nm"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="mr-nm">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>com.phone.analystic.mr.nm.NewMembersRunner</main-class>
+            <arg>-d</arg>
+            <arg>${running_date}</arg>
+        </java>
+        <ok to="mr-session"/>
+        <error to="fail"/>
+    </action>
+
+
+    <action name="mr-session">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>com.phone.analystic.mr.session.SessionRunner</main-class>
+            <arg>-d</arg>
+            <arg>${running_date}</arg>
+        </java>
+        <ok to="mr-local"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="mr-local">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>com.phone.analystic.mr.locaion.LocationRunner</main-class>
+            <arg>-d</arg>
+            <arg>${running_date}</arg>
+        </java>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+
+    <kill name="fail">
+        <message>Java failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

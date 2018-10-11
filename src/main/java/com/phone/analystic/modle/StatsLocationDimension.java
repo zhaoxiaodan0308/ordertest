@@ -1,7 +1,6 @@
 package com.phone.analystic.modle;
 
 import com.phone.analystic.modle.base.BaseDimension;
-import com.phone.analystic.modle.base.BrowserDimension;
 import com.phone.analystic.modle.base.LocationDimension;
 
 import java.io.DataInput;

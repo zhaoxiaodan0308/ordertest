@@ -2,7 +2,6 @@ package com.phone.analystic.mr.activeUser;
 
 import com.phone.Util.TimeUtil;
 import com.phone.analystic.modle.StatsUserDimension;
-import com.phone.analystic.modle.base.DateDimension;
 import com.phone.analystic.modle.value.map.TimeOutputValue;
 import com.phone.analystic.modle.value.reduce.OutputWritable;
 import com.phone.common.DateEnum;

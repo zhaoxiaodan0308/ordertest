@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 
 /**
- * 用户模块下的新增用户
+ * 用户模块下的活跃用户
  */
 public class ActiveUserMapper extends Mapper<LongWritable, Text, StatsUserDimension, TimeOutputValue> {
     private static final Logger logger = Logger.getLogger(ActiveUserMapper.class);

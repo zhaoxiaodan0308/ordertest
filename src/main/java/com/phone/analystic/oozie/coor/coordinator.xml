@@ -1,0 +1,8 @@
+<coordinator-app name="phone-coor" frequency="${coord:days(1)}" start="${start}" end="${end}" timezone="UTC"
+                 xmlns="uri:oozie:coordinator:0.2">
+    <action>
+        <workflow>
+            <app-path>${workflowAppUri}</app-path>
+        </workflow>
+    </action>
+</coordinator-app>
